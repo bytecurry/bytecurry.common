@@ -3,7 +3,9 @@
 ;;;; Copyright (c) 2015 Thayne McCombs <astrothayne@gmail.com>
 
 (defpackage #:bytecurry.common
-  (:use #:cl))
+  (:use #:cl)
+  (:export #:sset
+           #:rset))
 
 (defpackage #:bytecurry.common.syntax
   (:documentation "Readtable for commonly used read macros. Includes the following syntax:
