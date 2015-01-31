@@ -10,18 +10,19 @@
 (defun print-hash-table (table &optional (stream *standard-output*))
   "Print a hashtable in a way that can be read back with hash-table-reader"
   (declare (hash-table table) (stream stream))
-  (write-string "#h" stream)
+  (write-string "#H" stream)
   (write (hash-table-plist table) :stream stream)
   table)
 
-;;; This will give a warning about redifining the method for
-;;; hash-table.
-(defmethod print-object ((table hash-table) stream)
-  "Override printing hash objects, in a way that is readable with the macro"
-  (declare (stream stream))
-  (if *print-readably*
-     (error (make-condition 'print-not-readable :object table))
-     (print-hash-table table stream)))
+(locally
+    ;;Ignore redefinition warning
+    (declare #+sbcl (sb-ext:muffle-conditions sb-kernel:redefinition-with-defmethod))
+    (defmethod print-object ((table hash-table) stream)
+      "Override printing hash objects, in a way that is readable with the macro"
+      (declare (stream stream))
+      (if *print-readably*
+          (error (make-condition 'print-not-readable :object table))
+          (print-hash-table table stream))))
 
 (defun hash-table-reader (stream sub-char numarg)
   "Reader macro function for reading a literal hash table"
