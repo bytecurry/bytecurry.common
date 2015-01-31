@@ -13,7 +13,7 @@
                 #:cl-interpol
                 #:cl-annot
                 #:cl-syntax)
-  :serial t
   :components ((:file "package")
-               (:file "bytecurry.common")
-               (:file "common-syntax")))
+               (:file "lists" :depends-on ("package"))
+               (:file "sget" :depends-on ("package" "lists"))
+               (:file "common-syntax" :depends-on ("package"))))
