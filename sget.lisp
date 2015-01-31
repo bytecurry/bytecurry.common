@@ -9,6 +9,9 @@ access properties of an object. The s stands for super, simple, or standard"))
 (defgeneric sset (object key value &key &allow-other-keys)
   (:documentation "Generic set function. companion to %sget"))
 
+(defsetf sget (object key &rest rest) (store)
+  `(sset ,object ,key ,store ,@rest))
+
 (defmacro define-sgetter (lambda-list place-expr &key declarations documentation)
   "Define a getter and setter for a place to use sget with"
   (with-unique-names (value)
@@ -20,6 +23,10 @@ access properties of an object. The s stands for super, simple, or standard"))
               ,declarations
               ,documentation
               (setf ,place-expr ,value)))))
+
+(define-sgetter ((object standard-object) key &key &allow-other-keys)
+    (slot-value object key)
+  :documentation "Access a slot on a standard-object")
 
 (define-sgetter ((object hash-table) key &key default)
     (gethash key object default))
