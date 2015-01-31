@@ -3,9 +3,26 @@
 ;;;; Copyright (c) 2015 Thayne McCombs <astrothayne@gmail.com>
 
 (defpackage #:bytecurry.common
-  (:use #:cl)
-  (:export #:sset
-           #:rset))
+  (:use #:cl #:alexandria #:iterate #:bordeaux-threads #:trivial-gray-streams)
+  (:export #:define-sgetter
+           #:sget
+           #:sset
+           #:rget
+           ;;lists
+           #:ninsert-after
+           #:insert
+           ;; buffers
+           #:buffer
+           #:make-buffer
+           #:buffer-element-type
+           #:buffer-limit #:buffer-available #:buffer-remaining
+           #:buffer-empty-p #:buffer-full-p
+           #:buffer-write-element #:buffer-read-element
+           #:buffer-write-sequence #:buffer-read-sequence
+           #:buffer-clear
+           ;;streams
+           #:piped-stream
+           #:make-piped-stream))
 
 (defpackage #:bytecurry.common.syntax
   (:documentation "Readtable for commonly used read macros. Includes the following syntax:

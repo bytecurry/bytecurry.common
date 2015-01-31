@@ -12,8 +12,12 @@
                 #:iterate
                 #:cl-interpol
                 #:cl-annot
-                #:cl-syntax)
+                #:cl-syntax
+                #:trivial-gray-streams
+                #:bordeaux-threads)
   :components ((:file "package")
                (:file "lists" :depends-on ("package"))
                (:file "sget" :depends-on ("package" "lists"))
+               (:file "buffer" :depends-on ("package"))
+               (:file "streams" :depends-on ("package" "buffer"))
                (:file "common-syntax" :depends-on ("package"))))
