@@ -10,7 +10,7 @@
 (defun print-hash-table (table &optional (stream *standard-output*))
   "Print a hashtable in a way that can be read back with hash-table-reader"
   (declare (hash-table table) (stream stream))
-  (write-string "#H" stream)
+  (write-string "#H'" stream)
   (write (hash-table-plist table) :stream stream)
   table)
 
@@ -25,9 +25,14 @@
           (print-hash-table table stream))))
 
 (defun hash-table-reader (stream sub-char numarg)
-  "Reader macro function for reading a literal hash table"
+  "Reader macro function for reading a literal hash table.
+If the first character after the sub-char is a #\', then treat it as a literal,
+and create the hash-table at read-time."
   (declare (ignore sub-char numarg))
-  (plist-hash-table (read stream t nil t)))
+  (let ((props (read stream t nil t)))
+    (if (= (first props) 'quote)
+        (plist-hash-table (second props)))
+        `(plist-hash-table (list ,@props))))
 
 ;;; Define the syntax
 ;;; The readtable defined is available as common-syntax:syntax
