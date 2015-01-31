@@ -36,4 +36,5 @@
   (:import-from #:alexandria #:plist-hash-table #:hash-table-plist)
   (:export #:syntax
            #:print-hash-table
-           #:enable-syntax))
+           #:enable-syntax
+           #:defreadtable-with-syntax))
