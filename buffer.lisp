@@ -1,3 +1,8 @@
+;;;; buffer.lisp
+;;;;
+;;;; Copyright (c) 2015 Thayne McCombs <astrothayne@gmail.com>
+;;;;
+;;;; Buffer class for a fixed-sized buffer of data
 (in-package #:bytecurry.common)
 
 (deftype %buffer-head-t () `(integer -1 ,array-dimension-limit))

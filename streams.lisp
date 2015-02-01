@@ -1,3 +1,8 @@
+;;;; streams.lisp
+;;;;
+;;;; Copyright (c) 2015 Thayne McCombs <astrothayne@gmail.com>
+;;;;
+;;;; Piped streams
 (in-package #:bytecurry.common)
 
 (defclass piped-stream (fundamental-binary-stream fundamental-input-stream fundamental-output-stream)

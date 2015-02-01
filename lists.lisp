@@ -1,3 +1,8 @@
+;;;; lists.lisp
+;;;;
+;;;; Copyright (c) 2015 Thayne McCombs <astrothayne@gmail.com>
+;;;;
+;;;; list operations
 (in-package #:bytecurry.common)
 
 (defun ninsert-after (lst idx item)

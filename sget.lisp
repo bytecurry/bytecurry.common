@@ -1,3 +1,8 @@
+;;;; sget.lisp
+;;;;
+;;;; Copyright (c) 2015 Thayne McCombs <astrothayne@gmail.com>
+;;;;
+;;;; Simplified getters and setters
 (in-package #:bytecurry.common)
 
 ;;; Begin sget/sset code
