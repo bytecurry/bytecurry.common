@@ -16,7 +16,7 @@
 
 (locally
     ;;Ignore redefinition warning
-    (declare #+sbcl (sb-ext:muffle-conditions sb-kernel:redefinition-with-defmethod))
+    (declare #+sbcl (sb-ext:muffle-conditions sb-kernel:redefinition-warning))
     (defmethod print-object ((table hash-table) stream)
       "Override printing hash objects, in a way that is readable with the macro"
       (declare (stream stream))
@@ -30,7 +30,7 @@ If the first character after the sub-char is a #\', then treat it as a literal,
 and create the hash-table at read-time."
   (declare (ignore sub-char numarg))
   (let ((props (read stream t nil t)))
-    (if (= (first props) 'quote)
+    (if (eq (first props) 'quote)
         (plist-hash-table (second props)))
         `(plist-hash-table (list ,@props))))
 
