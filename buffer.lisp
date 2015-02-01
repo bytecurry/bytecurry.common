@@ -30,7 +30,7 @@
 (defun buffer-limit (buff)
   (declare (buffer buff))
   "Get the total available size of the buffer"
-  (length (slot-value buff 'backing-vector)))
+  (array-dimension (slot-value buff 'backing-vector) 0))
 
 (defun buffer-available (buff)
   (declare (buffer buff))
@@ -67,8 +67,8 @@
     (with-slots ((arr backing-vector) head tail) buff
       (when (< head 0)
         (setf head 0 tail 0))
-      (setf (aref arr tail) element)
-      (setf tail (mod (1+ tail) (length arr)))
+      (setf (svref arr tail) element)
+      (setf tail (mod (1+ tail) (array-dimension arr 0)))
     t)))
 
 (defun buffer-read-element (buff &optional default)
@@ -78,8 +78,8 @@ the second value."
   (if (buffer-empty-p buff)
       (values default nil)
       (with-slots ((arr backing-vector) head tail) buff
-        (values (prog1 (aref arr head)
-                  (setf head (mod (1+ head) (length arr)))
+        (values (prog1 (svref arr head)
+                  (setf head (mod (1+ head) (array-dimension arr 0)))
                   (when (= head tail) (setf head -1)))
                 t))))
 
@@ -89,12 +89,12 @@ the second value."
 of the input sequence to read from. Returns the number of elements written."
   (with-slots ((arr backing-vector) head tail) buff
     (let ((amount-to-save (min (- end start) (buffer-remaining buff)))
-          (arr-length (length arr)))
+          (arr-length (array-dimension arr 0)))
       (when (not (zerop amount-to-save))
         (when (< head 0)
           (setf head 0 tail 0))
         (iter (for element in-sequence seq with-index idx from start below (+ start amount-to-save))
-              (setf (aref arr tail) element)
+              (setf (svref arr tail) element)
               (setf tail (mod (1+ tail) arr-length))
               (finally (return idx)))))))
 
@@ -104,10 +104,10 @@ of the input sequence to read from. Returns the number of elements written."
 Returns the position of the first element of seq that wasn't updated. (>= end)"
   (with-slots ((arr backing-vector) head tail) buff
     (let ((amount-to-retrieve (min (- end start) (buffer-available buff)))
-          (arr-length (length arr)))
+          (arr-length (array-dimension arr 0)))
       (when (not (zerop amount-to-retrieve))
         (iter (for idx from start below (+ start amount-to-retrieve))
-              (setf (elt seq idx) (aref arr head))
+              (setf (elt seq idx) (svref arr head))
               (setf head (mod (1+ head) arr-length))
               (finally (when (= head tail)
                          (setf head -1)))
