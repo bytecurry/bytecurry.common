@@ -22,7 +22,13 @@
            #:buffer-clear
            ;;streams
            #:piped-stream
-           #:make-piped-stream))
+           #:make-piped-stream
+           ;;iterate
+           #:in-array
+           #:row-major-index
+           #:in-row-major-subscripts #:in-column-major-subscripts
+           #:row-major-to-subscripts
+           ))
 
 (defpackage #:bytecurry.common.syntax
   (:documentation "Readtable for commonly used read macros. Includes the following syntax:

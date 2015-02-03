@@ -20,4 +20,5 @@
                (:file "sget" :depends-on ("package" "lists"))
                (:file "buffer" :depends-on ("package"))
                (:file "streams" :depends-on ("package" "buffer"))
+               (:file "iter" :depends-on ("package"))
                (:file "common-syntax" :depends-on ("package"))))
