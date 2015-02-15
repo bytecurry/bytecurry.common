@@ -16,6 +16,7 @@
                 #:trivial-gray-streams
                 #:bordeaux-threads)
   :components ((:file "package")
+               (:file "bytecurry.common" :depends-on ("package"))
                (:file "lists" :depends-on ("package"))
                (:file "sget" :depends-on ("package" "lists"))
                (:file "buffer" :depends-on ("package"))

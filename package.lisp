@@ -4,7 +4,9 @@
 
 (defpackage #:bytecurry.common
   (:use #:cl #:alexandria #:iterate #:bordeaux-threads #:trivial-gray-streams)
-  (:export #:define-sgetter
+  (:export #:alias #:defalias
+           #:macro-alias #:define-macro-alias
+           #:define-sgetter
            #:sget
            #:sset
            #:rget
